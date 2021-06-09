@@ -62,6 +62,16 @@ void Admin::display(){
     }
 // Child Class Admin End
 
+// Child Class User
+class User : public Person{
+    public:
+        void Inquiry();
+        void SeatReserve();
+        void Complaint();
+        void Cancel();
+};
+// Child Class User End
+
 // Main body
 
 int main(){
