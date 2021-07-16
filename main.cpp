@@ -1,7 +1,14 @@
 #include <iostream>
 #include <string>
+#include <iomanip>
+#include <fstream>
 
 using namespace std;
+
+// Globally declared array for Inquiry (change using arrays for loop)
+string TrainDetails[5][8];
+
+void Execute();
 
 // Person Class
 
@@ -69,12 +76,69 @@ class User : public Person{
         void SeatReserve();
         void Complaint();
         void Cancel();
+
+    private:
+        string userName;
+        string message;
+        int userChoice;
+        int seatRow;
+        int seatColumn;
 };
-// Child Class User End
 
-// Main body
 
-int main(){
+void User::Inquiry(){
+ 
+
+    cout << left << "\n|Train No." << "  " << left << "|Train Name" << "  " << left << "|Boarding pt." << "  " << left << "|Destination pt."  <<"  ";
+    cout << left << "|Time" << "  " << "|B-Class" << "  " << left << "|F-Class" << "  " << left << "|E-Class" <<"  ";
+    cout << left << endl << endl;
+
+
+    ifstream fin;
+    string line;
+    fin.open("Inquiry.txt");
+    if(fin){
+        while(getline(fin,line))
+            cout << line << endl;
+    }
+    fin.close();
+
+
+}
+
+    // complaint function start
+void User::Complaint(){
+    cout <<"\n Do you want to give \n1.Suggestion \n2.Complaint \n";
+    cin >> userChoice;
+
+
+    if (userChoice == 1){
+        cin.ignore();
+        cout <<"Enter Your Name: ";
+        getline(cin, userName);
+
+        cout << "Enter Your Suggestion: ";
+        getline(cin, message);
+
+        cout << "Thank you for your Suggestion "<<endl;
+    }
+    else if(userChoice == 2){
+        cin.ignore();
+        cout <<"Enter Your Name: ";
+        getline(cin, userName);
+
+        cout << "Enter Your Complaint: ";
+        getline(cin, message);
+
+        cout << "We will look into your Complain" << endl;
+    }
+}
+    // complaint function end
+
+
+// Child Class User
+
+void Execute(){
     cout << "\t\t\t ================================== \n";
     cout << "\t\t\t||                                ||\n";
     cout << "\t\t\t||                                ||\n";
@@ -85,8 +149,9 @@ int main(){
 
     cout << endl << endl;
 
-    	int ch;
+    	int ch, userModeChoice;
         Admin pOne;
+        User pUser;
 	
         do
         {
@@ -100,18 +165,38 @@ int main(){
                 case 1:
                     pOne.display();
                     break;
-                // case 2:
-                    
-                //     break;
+                case 2:
+                    cout <<"\n1.Inquiry \n2.Seat Reservation"; 
+                    cout << "\n3.Complaint \n4.Ticket Cancellaton \n5.Return to MainMenu \n";
+                    cin >> userModeChoice;
+                    switch(userModeChoice)
+                    {
+                       case 1:
+                        pUser.Inquiry();
+                        break;
+                        //case 2:
+                        //    break;
+                        case 3:
+                            pUser.Complaint();
+                            break;
+                       // case 4:
+                           // break;
+                    }
+                    break;
                 default:
                 break;
                     // exit(0);
             }
         }while(ch<3);
 
-        return 0;
-
-
 }
 
 // Main body
+
+int main(){
+
+    Execute();
+    return 0;
+}
+
+// Main body END
