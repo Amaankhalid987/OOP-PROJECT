@@ -2,6 +2,8 @@
 #include <string>
 #include <iomanip>
 #include <fstream>
+#include "Header-Files/Sign-Up.h"
+#include "Header-Files/Log-In.h"
 
 using namespace std;
 
@@ -49,24 +51,39 @@ Person::Person(){
 // Child Class Admin
 class Admin : public Person{
     public:
-        void display();
+        bool display();
+        void CreateDataBase();
     protected:
         string adminPass = "aetooc";        // Admin Password
 
 };
 
-void Admin::display(){
+bool Admin::display(){
 
         string password;
         cout << "Enter your Password: ";
         getline(cin, password);
 
-        if ( password == adminPass )
+        if ( password == adminPass ){
             cout << "Correct Password\nWelcome!!!\n";
-        else
+            return true;
+        }
+        else{
             cout << "Incorrect! No access granted!";
-
+            return false;
+        }
     }
+
+void Admin::CreateDataBase(){
+    ifstream fin;
+    fin.open("DataBase.csv");
+    if(fin) {
+        // cout<<"file exists";
+   } else {
+        ofstream fout;
+        fout.open("DataBase.csv");
+   }
+}
 // Child Class Admin End
 
 // Child Class User
@@ -96,7 +113,7 @@ void User::Inquiry(){
 
     ifstream fin;
     string line;
-    fin.open("Inquiry.txt");
+    fin.open("Header-Files/Inquiry.txt");
     if(fin){
         while(getline(fin,line))
             cout << line << endl;
@@ -163,28 +180,81 @@ void Execute(){
             switch(ch)
             {
                 case 1:
-                    pOne.display();
-                    break;
-                case 2:
-                    cout <<"\n1.Inquiry \n2.Seat Reservation"; 
-                    cout << "\n3.Complaint \n4.Ticket Cancellaton \n5.Return to MainMenu \n";
-                    cin >> userModeChoice;
-                    switch(userModeChoice)
-                    {
-                       case 1:
-                        pUser.Inquiry();
-                        break;
-                        //case 2:
-                        //    break;
-                        case 3:
-                            pUser.Complaint();
+                    if(pOne.display()){
+                        cout << "\n1.Create DataBase\n2.Return to MainMenu\n> ";
+                        cin >> ch;
+                        if(ch == 1){
+                            pOne.CreateDataBase();
+                            cout << "Done!\n";
                             break;
-                       // case 4:
-                           // break;
+                        }
+                        else if (ch == 2){
+                            // Execute();
+                            break;
+                        }
+                    }
+                case 2:
+                    cout << "\n1.Sign Up\n2.Log In\n3.Guest Mode\n> ";
+                    cin >> ch;
+                    if(ch == 1){
+                        // cout << "In progress!" << endl;
+                        pOne.CreateDataBase();
+                        cin.ignore();
+                        SignUp();
+                        
+                    }
+                    else if (ch == 2){
+                        // cout << "In progress!" << endl;
+                        cin.ignore();
+                        bool check = LogIn();
+                        if (check == true){
+                            cout <<"\n1.Inquiry \n2.Seat Reservation"; 
+                            cout << "\n3.Complaint \n4.Ticket Cancellaton \n5.Return to MainMenu \n";
+                            cin >> userModeChoice;
+                            switch(userModeChoice){
+
+                                case 1:
+                                    pUser.Inquiry();
+                                    break;
+                                case 2:
+                                    break;
+                                case 3:
+                                    pUser.Complaint();
+                                    break;
+                                case 4:
+                                    break;
+                                case 5:
+                                    Execute();
+                                    break;
+                            }
+                            
+                        }
+
+                    }
+                    else{
+                        cout <<"\n1.Inquiry \n2.Seat Reservation"; 
+                        cout << "\n3.Complaint \n4.Ticket Cancellaton \n5.Return to MainMenu \n";
+                        cin >> userModeChoice;
+                        switch(userModeChoice){
+
+                            case 1:
+                                pUser.Inquiry();
+                                break;
+                            case 2:
+                                break;
+                            case 3:
+                                pUser.Complaint();
+                                break;
+                            case 4:
+                                break;
+                            case 5:
+                                Execute();
+                                break;
+                        }
                     }
                     break;
                 default:
-                break;
+                    break;
                     // exit(0);
             }
         }while(ch<3);
@@ -199,4 +269,4 @@ int main(){
     return 0;
 }
 
-// Main body END
+// Main body
