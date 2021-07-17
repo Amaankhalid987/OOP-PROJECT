@@ -136,7 +136,13 @@ void User::Complaint(){
 
         cout << "Enter Your Suggestion: ";
         getline(cin, message);
-
+        
+        ofstream outfile("Suggestion.txt",std::ios_base::app);
+        outfile << userName << endl;
+        outfile << message << endl;
+        outfile << "---------------------------------------------------------------" << endl;
+        outfile.close();
+        
         cout << "Thank you for your Suggestion "<<endl;
     }
     else if(userChoice == 2){
@@ -146,6 +152,12 @@ void User::Complaint(){
 
         cout << "Enter Your Complaint: ";
         getline(cin, message);
+        
+        ofstream outfile("Complaint.txt",std::ios_base::app);
+        outfile << userName << endl;
+        outfile << message << endl;
+        outfile << "---------------------------------------------------------------" << endl;
+        outfile.close();
 
         cout << "We will look into your Complain" << endl;
     }
