@@ -1,0 +1,5 @@
+| 1	| Volvo Express |   Karachi   |   Abbotabad   | Mon-(5AM) |
+| 2	| Green Line    |   Lahore    |   Hyderabad   | Tue-(12AM)|
+| 3	| Tezgam	|   Multan    |  Muzaffarabad | Wed-(12PM)|
+| 4	| Shalimar	|  RawalPindi |     Quetta    | Sat-(8AM) |
+| 5	| Awam Express  |   Peshawar  |     Gawadar   | Sun-(3PM) |
